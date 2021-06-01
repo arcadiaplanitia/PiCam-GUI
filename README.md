@@ -1,4 +1,4 @@
-# PiCam-GUI
+# Raspberry Pi Camera GUI
 A GUI for the Raspberry Pi High Quality Camera (still in its early stages)
 
 Feel free to help contribute!
