@@ -17,12 +17,16 @@ if not path.exists('photos'): #Create photo directory if not present
 
 pygame.init() # Initialize pygame
 clock = pygame.time.Clock() #Setup clock for 60 fps
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) #Setup screen
+screen = pygame.display.set_mode((0, 0)) #Setup screen , pygame.FULLSCREEN
 font = pygame.font.Font(None, 24) #Create font
+
+#Create some colors
+black = 0,0,0
+white = 255,255,255
 
 #Functions
 class Button:
-    def __init__(self, text,  pos, font, bg="black", feedback=""):
+    def __init__(self, text,  pos, font, bg, feedback=""):
         self.x, self.y = pos
         self.font = pygame.font.SysFont("Arial", font)
         if feedback == "":
@@ -31,7 +35,7 @@ class Button:
             self.feedback = feedback
         self.change_text(text, bg)
 
-    def change_text(self, text, bg="black"):
+    def change_text(self, text, bg):
         self.text = self.font.render(text, 1, pygame.Color("White"))
         self.size = self.text.get_size()
         self.surface = pygame.Surface(self.size)
@@ -47,12 +51,9 @@ class Button:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    self.change_text(self.feedback, bg="red")
+                    self.change_text(self.feedback, bg=white)
 
 
-#Create some colors
-black = 0,0,0
-white = 255,255,255
 
 layer = pygame.Surface([width, height], pygame.SRCALPHA) #Creates transparent surface for GUI
 text = 'Hello'
@@ -63,7 +64,7 @@ camera.resolution = (4056, 2434) #Set resolution
 camera.start_preview() #Start preview
 
 #Buttons
-button1 = Button("Click here", (100, 100), font=30, bg="navy", feedback="You clicked me")
+button1 = Button("Click here", (100, 100), font=30, bg=black, feedback="You clicked me")
 
 # Main loop
 while alive:
@@ -71,11 +72,6 @@ while alive:
     layer.fill((0, 0, 0, 0))
     layer.blit(textGraphic, (100,100))
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-           
-    
     for event in pygame.event.get(): #Detects key press (temp until GUI)
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
@@ -88,18 +84,14 @@ while alive:
     button1.show()
     pygamesScreenRaw = pygame.image.tostring(layer, 'RGBA')
     if firstLoop:
-        o = camera.add_overlay(pygamesScreenRaw, size=(
-            width, height), fullscreen=True)
+        o = camera.add_overlay(pygamesScreenRaw, size=(width, height), fullscreen=True)
         o.alpha = 255
         o.layer = 3
         firstLoop = False
     else:
+        screen.blit(layer, (0,0))
+        pygame.display.update()
         o.update(pygamesScreenRaw)
     
 
     clock.tick(60)
-
-
-
-
-
