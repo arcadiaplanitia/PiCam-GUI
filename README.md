@@ -14,3 +14,6 @@ Pimoroni Hyperpixel 4.0" Touch Display
 Battery pack
 
 I might add a Pimoroni button shim later
+
+
+Build tutorial with 3D prints will be added later, once the hardware is finialized.
