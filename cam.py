@@ -32,7 +32,7 @@ clicked = False
 
 #Functions
 class Button:
-    def __init__(self, text,  pos, font, bg="black", feedback=""):
+    def __init__(self, text,  pos, font, bg, feedback=""):
         self.x, self.y = pos
         self.font = pygame.font.SysFont("Arial", font)
         if feedback == "":
@@ -41,7 +41,7 @@ class Button:
             self.feedback = feedback
         self.change_text(text, bg)
 
-    def change_text(self, text, bg="black"):
+    def change_text(self, text, bg):
         self.text = self.font.render(text, 1, pygame.Color("Black"))
         self.size = self.text.get_size()
         self.surface = pygame.Surface((self.size[0]+padding, self.size[1]+padding))
@@ -72,7 +72,7 @@ camera.resolution = (4056, 2434) #Set resolution
 camera.start_preview() #Start preview
 
 #Buttons
-button1 = Button("Click here", (100, 100), font=30, bg=black, feedback="Clicked")
+button1 = Button("Click here", (100, 100), font=30, bg=white, feedback="Clicked")
 
 # Main loop
 while alive:
@@ -105,6 +105,5 @@ while alive:
         pygame.display.update()
         o.update(pygamesScreenRaw)
     
-
     clock.tick(60)
 
